@@ -70,6 +70,17 @@ describe('Promise.obj()', () => {
         expect(promise_obj(test_obj)).to.eventually.equal(test_obj);
     });
 
+    it('should reject all promises if any one promise rejects in given simple object', () => {
+        const error = new Error('some error!');
+        const test_obj = {
+            one: 1,
+            two: Promise.reject(error),
+            three: 3,
+        };
+
+        expect(promise_obj(test_obj)).to.eventually.rejectedWith(error);
+    });
+
     it('should resolve all promises in given complex objects ', () => {
         const p3 = Promise.resolve(3);
         const p5 = Promise.resolve(5);
@@ -80,7 +91,6 @@ describe('Promise.obj()', () => {
         const p13 = Promise.resolve(13);
         const p15 = Promise.resolve(15);
         const p16 = Promise.resolve(16);
-        
 
         const test_obj = {
             one: 1,
