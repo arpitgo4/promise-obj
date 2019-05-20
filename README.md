@@ -76,7 +76,7 @@ return promise-obj(test_obj)
 ```
 
 ### How to contribute
-```javascript
-// run mocha in watch mode
+```
+## run mocha in watch mode
 npm run test:watch
 ```
