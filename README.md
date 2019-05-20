@@ -8,6 +8,8 @@ npm install --save @arpitgo4/promise-obj
 ```
 
 ### How to use ?
+
+#### Promise resolution
 ```javascript
 const promise-obj = require('@arpitgo4/promise-obj');
 
