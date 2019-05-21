@@ -2,7 +2,11 @@
 const { promise_mapper } = require('../lib');
 
 const { expect } = require('chai');
+
 const bluebird_promise = require('bluebird').Promise;
+const RSVP = require('rsvp');
+const ES6_Promise = require('es6-promise');
+const promise_A_plus = require('promise');
 
 
 describe('Promise Mapper', () => {
@@ -106,13 +110,55 @@ describe('Promise Mapper', () => {
             expect(promise_mapper(test_obj)).to.deep.equals(result_obj);
         });
 
-        it('should recognize non ES6 promises too.', () => {
+        it('should recognize bluebird promises too.', () => {
             const bluebird_test_promise = bluebird_promise.resolve(1);
             const test_obj = { 
                 counter: bluebird_test_promise, 
             };
             const result_obj = {
                 counter: bluebird_test_promise,
+            };
+    
+            const promise_map = promise_mapper(test_obj);
+            
+            expect(promise_map).to.be.deep.equals(result_obj);
+        });
+
+        it('should recognize rsvp promises too.', () => {
+            const rsvp_test_promise = RSVP.Promise.resolve(1);
+            const test_obj = { 
+                counter: rsvp_test_promise, 
+            };
+            const result_obj = {
+                counter: rsvp_test_promise,
+            };
+    
+            const promise_map = promise_mapper(test_obj);
+            
+            expect(promise_map).to.be.deep.equals(result_obj);
+        });
+
+        it('should recognize custom es-6 promises too.', () => {
+            const es6_test_promise = ES6_Promise.resolve(1);
+            const test_obj = { 
+                counter: es6_test_promise, 
+            };
+            const result_obj = {
+                counter: es6_test_promise,
+            };
+    
+            const promise_map = promise_mapper(test_obj);
+            
+            expect(promise_map).to.be.deep.equals(result_obj);
+        });
+
+        it('should recognize bare bones Promise/A+ promises too.', () => {
+            const test_promise = promise_A_plus.resolve(1);
+            const test_obj = { 
+                counter: test_promise, 
+            };
+            const result_obj = {
+                counter: test_promise,
             };
     
             const promise_map = promise_mapper(test_obj);
