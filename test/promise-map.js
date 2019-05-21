@@ -2,6 +2,7 @@
 const { promise_mapper } = require('../lib');
 
 const { expect } = require('chai');
+const bluebird_promise = require('bluebird').Promise;
 
 
 describe('Promise Mapper', () => {
@@ -103,6 +104,20 @@ describe('Promise Mapper', () => {
             };
 
             expect(promise_mapper(test_obj)).to.deep.equals(result_obj);
+        });
+
+        it('should recognize non ES6 promises too.', () => {
+            const bluebird_test_promise = bluebird_promise.resolve(1);
+            const test_obj = { 
+                counter: bluebird_test_promise, 
+            };
+            const result_obj = {
+                counter: bluebird_test_promise,
+            };
+    
+            const promise_map = promise_mapper(test_obj);
+            
+            expect(promise_map).to.be.deep.equals(result_obj);
         });
 
     });
